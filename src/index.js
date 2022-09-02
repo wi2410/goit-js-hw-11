@@ -129,6 +129,7 @@ function smoothScroll() {
         behavior: "smooth",
     });
 
+  
 // const btnLoadMore = document.querySelector('.btn__load-more');
 
 // btnLoadMore.classList.add('is-hiden')
@@ -136,5 +137,5 @@ function smoothScroll() {
 // btnLoadMore.addEventListener('click', onLoadMore);
 
 // function onLoadMore() {
-//     apiService.fetchArticles().then(renderMarkupCards);
+//     pixabayApiService.fetchArticles().then(renderMarkupCards);
 // }
