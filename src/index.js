@@ -9,7 +9,7 @@ const galleryContainer = document.querySelector('.gallery');
 const toBtnTop = document.querySelector('.btn-to-top');
 const loading = document.querySelector('.pulse-container');
 
-window.addEventListener('scroll', InfiniteScrolling);
+window.addEventListener('scroll', infiniteScrolling);
 window.addEventListener('scroll', onScroll);
 toBtnTop.addEventListener('click', onToTopBtn);
 
@@ -69,7 +69,7 @@ function clearArticlesContainer() {
     galleryContainer.innerHTML = '';  
 }
 
-function InfiniteScrolling() {
+function infiniteScrolling() {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 	
 	console.log( { scrollTop, scrollHeight, clientHeight });

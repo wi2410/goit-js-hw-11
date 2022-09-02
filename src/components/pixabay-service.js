@@ -35,7 +35,8 @@ export default class PixabayApiService {
     }
 
     // fetchArticles() {
-    //     fetch(`https://pixabay.com/api/?key=29656513-372141d59901600f23fa64349&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=40`)
+    //     const response = fetch(`https://pixabay.com/api/?key=29656513-372141d59901600f23fa64349&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=40`)
+    //     return response.data;
     // }
 
     resetPage() {
