@@ -10,24 +10,30 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-<header>
-    <form class="search-form search-container" id="search-form">
-        <input class="search-input" type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." />
-        <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>
-    </form>
+<header class="header">
+    <div class="container">
+        <form class="search-form search-container" id="search-form">
+            <input class="search-input" type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." />
+            <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
 </header>
 
 <main>
 
     
 
-    <div class="gallery">
-        <!-- Карточки изображений -->
+    <div class="gallery-container">
+        <div class="gallery">
+            <!-- Карточки изображений -->
+        </div>
     </div>
 
-    <button type="submit" class="btn__load-more">Load more</button>
+    <div class="load">
+        <button type="submit" class="btn__load-more">Load more</button>
+    </div>
 
 </main>
-    
+    <script src="index.js" type="module"></script>
 </body>
 </html>
