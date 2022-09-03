@@ -9,12 +9,17 @@ const galleryContainer = document.querySelector('.gallery');
 const toBtnTop = document.querySelector('.btn-to-top');
 const loading = document.querySelector('.pulse-container');
 
-window.addEventListener('scroll', infiniteScrolling);
 window.addEventListener('scroll', onScroll);
 toBtnTop.addEventListener('click', onToTopBtn);
 
 const pixabayApiService = new PixabayApiService();
 let simpleLightBox = null;
+let observer = new IntersectionObserver(entries => {
+    if (entries[0].intersectionRatio <= 0) {
+        return;
+    }
+    showLoading();
+})
 
 inputEl.addEventListener('submit', onSubmit);
 
@@ -60,21 +65,11 @@ function renderMarkupCards(obj) {
     galleryContainer.insertAdjacentHTML('beforeend', markup);
     simpleLightBox = new SimpleLightbox('.gallery a');
     loading.classList.remove('show');
+    observer.observe(loading);
 }
 
 function clearArticlesContainer() {
     galleryContainer.innerHTML = '';  
-}
-
-function infiniteScrolling() {
-    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-	
-	console.log( { scrollTop, scrollHeight, clientHeight });
-	
-	if(clientHeight + scrollTop >= scrollHeight - 5) {
-		// show the loading animation
-        showLoading(); 
-	}
 }
 
 function showLoading() {
