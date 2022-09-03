@@ -26,10 +26,15 @@ inputEl.addEventListener('submit', onSubmit);
 
 function onSubmit(ev) {
     ev.preventDefault();
+    const inputValue = ev.currentTarget.elements.searchQuery.value;
 
     clearArticlesContainer();
-    pixabayApiService.query = ev.currentTarget.elements.searchQuery.value;
+    pixabayApiService.query = inputValue;
     pixabayApiService.resetPage();
+    if (inputValue === '') {
+        return  Notiflix.Notify.failure('Input field is EMPTY! Please enter your request!');
+    }
+
     pixabayApiService.fetchArticles().then(articles => {
         if (articles.hits.length === 0) {
             return  Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
