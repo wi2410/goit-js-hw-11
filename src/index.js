@@ -15,8 +15,6 @@ toBtnTop.addEventListener('click', onToTopBtn);
 
 const pixabayApiService = new PixabayApiService();
 let simpleLightBox = null;
-let totalPics = 0;
-
 
 inputEl.addEventListener('submit', onSubmit);
 
@@ -32,9 +30,8 @@ function onSubmit(ev) {
             return  Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
         }
         Notiflix.Notify.success(`Hooray! We found ${articles.totalHits} images.`);
-        totalPics = articles.total;
+        
         renderMarkupCards(articles);
-        // btnLoadMore.classList.remove('is-hiden');
     })   
 }
 
@@ -87,15 +84,15 @@ function showLoading() {
 }
 
 function loadMore() {
-if (pixabayApiService.page > Math.ceil(totalPics / pixabayApiService.picsPerPage)) {
-  return;
-  }  
+ 
   pixabayApiService.fetchArticles()
     .then(articles => {
-      renderMarkupCards(articles);
-      if (pixabayApiService.page > Math.ceil(totalPics / pixabayApiService.picsPerPage)) {
-        Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
-      }
+        renderMarkupCards(articles);
+        
+        const totalPages = Math.ceil(articles.totalHits / pixabayApiService.per_page)
+            if (pixabayApiService.page > totalPages) {
+                    Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
+                }
       smoothScroll();
     })
   
@@ -121,21 +118,11 @@ function onToTopBtn() {
 
 function smoothScroll() {
     const { height: cardHeight } = document
-                .querySelector(".gallery")
-                .firstElementChild.getBoundingClientRect();
+        .querySelector(".gallery")
+        .firstElementChild.getBoundingClientRect();
 
     window.scrollBy({
         top: cardHeight * 2,
         behavior: "smooth",
     });
-
-  
-// const btnLoadMore = document.querySelector('.btn__load-more');
-
-// btnLoadMore.classList.add('is-hiden')
-
-// btnLoadMore.addEventListener('click', onLoadMore);
-
-// function onLoadMore() {
-//     pixabayApiService.fetchArticles().then(renderMarkupCards);
-// }
+}
