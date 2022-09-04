@@ -14,6 +14,7 @@ toBtnTop.addEventListener('click', onToTopBtn);
 
 const pixabayApiService = new PixabayApiService();
 let simpleLightBox = null;
+let totalPics = 0;
 let observer = new IntersectionObserver(entries => {
     if (entries[0].intersectionRatio <= 0) {
         return;
@@ -28,19 +29,22 @@ function onSubmit(ev) {
     ev.preventDefault();
     const inputValue = ev.currentTarget.elements.searchQuery.value;
 
-    clearArticlesContainer();
-    pixabayApiService.query = inputValue;
-    pixabayApiService.resetPage();
     if (inputValue === '') {
-        return  Notiflix.Notify.failure('Input field is EMPTY! Please enter your request!');
+        return Notiflix.Notify.failure('Input field is EMPTY! Please enter your request!');
     }
+
+    observer.unobserve(loading);
+    clearArticlesContainer();
+    pixabayApiService.resetPage();
+    pixabayApiService.query = inputValue;
+    
 
     pixabayApiService.fetchArticles().then(articles => {
         if (articles.hits.length === 0) {
             return  Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
         }
         Notiflix.Notify.success(`Hooray! We found ${articles.totalHits} images.`);
-        
+        totalPics = articles.totalHits;
         renderMarkupCards(articles);
     })   
 }
@@ -84,12 +88,16 @@ function showLoading() {
 }
 
 function loadMore() {
+    if (pixabayApiService.page > Math.ceil(totalPics / pixabayApiService.perPage)) {
+        loading.classList.remove('show');
+        return;
+  }  
  
   pixabayApiService.fetchArticles()
     .then(articles => {
         renderMarkupCards(articles);
         
-        const totalPages = Math.ceil(articles.totalHits / pixabayApiService.per_page)
+        const totalPages = Math.ceil(articles.totalHits / pixabayApiService.perPage)
             if (pixabayApiService.page > totalPages) {
                     Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
                 }
